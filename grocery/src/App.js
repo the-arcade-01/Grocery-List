@@ -3,36 +3,11 @@ import './App.css';
 
 import GroceryList from './components/List';
 import AddItem from './components/AddItem';
+import {v4 as uuidv4} from 'uuid';
 
 class App extends React.Component{
   state = {
-    grocery : [
-      {
-        id : 1,
-        title : 'Milk',
-        completed : false
-      },
-      {
-        id : 2,
-        title : 'Bread',
-        completed : false
-      },
-      {
-        id : 3,
-        title : 'Meat',
-        completed : false
-      },
-      {
-        id : 4,
-        title : 'Wheat',
-        completed : false
-      },
-      {
-        id : 5,
-        title : 'Pound',
-        completed : false
-      }
-    ]
+    grocery : []
   }
   markItem = (id) => {
     this.setState({grocery:this.state.grocery.map(item=>{
@@ -45,15 +20,35 @@ class App extends React.Component{
   deleteItem = (id) => {
     this.setState({grocery:this.state.grocery.filter(item=>{
       return item.id !== id;
-    })})
+    })});
+    localStorage.setItem('grocery',null);
+    localStorage.setItem('grocery',JSON.stringify(this.state.grocery));
   }
   addItem = (item) =>{
     const newItem = {
-      id : 6,
+      id : uuidv4(),
       title : item,
       completed : false
     }
-    this.setState({grocery:[...this.state.grocery,newItem]});
+    if(localStorage.getItem('grocery') === null){
+      const items = [];
+      items.push(newItem);
+      localStorage.setItem('grocery',JSON.stringify(items));
+    } else {
+      const items = JSON.parse(localStorage.getItem('grocery'));
+      items.push(newItem);
+      localStorage.setItem('grocery',JSON.stringify(items));
+    }
+    this.setState({grocery:JSON.parse(localStorage.getItem('grocery'))});
+  }
+  // runs after render, here used for displaying the grocery items after rendering or refreshing
+  componentDidMount() {
+    const items = JSON.parse(localStorage.getItem('grocery'));
+    if(items === null){
+      return false;
+    } else {
+      this.setState({grocery:items});
+    }
   }
   render() {
     return (
