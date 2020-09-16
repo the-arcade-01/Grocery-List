@@ -12,7 +12,8 @@ class GroceryItem extends React.Component {
         return (
             <div style = {this.getStyle()}>
                 <p>
-                <input type='checkbox' onChange={this.props.markComplete.bind(this,id)}/>{' '}{title}
+                <input type='checkbox' onChange={this.props.markItem.bind(this,id)}/>{' '}{title}{' '}
+                <button onClick = {this.props.deleteItem.bind(this,id)}>X</button>
                 </p>
             </div>
         )
@@ -21,6 +22,7 @@ class GroceryItem extends React.Component {
 
 GroceryItem.propTypes = {
     item : PropTypes.object.isRequired,
-    markComplete : PropTypes.func.isRequired
+    markItem : PropTypes.func.isRequired,
+    deleteItem : PropTypes.func.isRequired
 }
 export default GroceryItem; 

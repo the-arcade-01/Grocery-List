@@ -33,7 +33,7 @@ class App extends React.Component{
       }
     ]
   }
-  markComplete = (id) => {
+  markItem = (id) => {
     this.setState({grocery:this.state.grocery.map(item=>{
       if(item.id === id){
         item.completed = !item.completed;
@@ -41,9 +41,14 @@ class App extends React.Component{
       return item;
     })});
   }
+  deleteItem = (id) => {
+    this.setState({grocery:this.state.grocery.filter(item=>{
+      return item.id !== id;
+    })})
+  }
   render() {
     return (
-      <GroceryList groceryList = {this.state.grocery} markComplete = {this.markComplete}/>
+      <GroceryList groceryList = {this.state.grocery} markItem = {this.markItem} deleteItem = {this.deleteItem}/>
     )
   }
 }
