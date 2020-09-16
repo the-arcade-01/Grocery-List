@@ -5,7 +5,7 @@ import GroceryItem from './Item.js';
 class GroceryList extends React.Component {
     render(){
         return this.props.groceryList.map((item)=>(
-            <GroceryItem item = {item} markItem = {this.props.markItem} deleteItem = {this.props.deleteItem}/>
+            <GroceryItem key = {item.id} item = {item} markItem = {this.props.markItem} deleteItem = {this.props.deleteItem}/>
         ));
     }
 }

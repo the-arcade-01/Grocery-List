@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 
 import GroceryList from './components/List';
+import AddItem from './components/AddItem';
 
 class App extends React.Component{
   state = {
@@ -46,9 +47,20 @@ class App extends React.Component{
       return item.id !== id;
     })})
   }
+  addItem = (item) =>{
+    const newItem = {
+      id : 6,
+      title : item,
+      completed : false
+    }
+    this.setState({grocery:[...this.state.grocery,newItem]});
+  }
   render() {
     return (
+      <React.Fragment>
+      <AddItem addItem = {this.addItem}/>
       <GroceryList groceryList = {this.state.grocery} markItem = {this.markItem} deleteItem = {this.deleteItem}/>
+      </React.Fragment>
     )
   }
 }
